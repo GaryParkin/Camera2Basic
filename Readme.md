@@ -20,3 +20,10 @@ Author
 Copyright (c) 2005-2008, The Android Open Source Project  
 Ported to Xamarin.Android by Christopher Blackman
 
+Proposed Changes:  
+
+1. Get the photo(s) from the local drive  
+2. Break out some of the code into tasks  
+
+
+
