@@ -11,18 +11,22 @@ namespace Camera2Basic.Listeners
    {
       private static readonly string TAG = "ImageAvailableListener";
 
-      public ImageAvailableListener(Camera2BasicFragment fragment, File file)
+      public ImageAvailableListener(Camera2BasicFragment fragment, File file, string folder)
       {
          if (fragment == null)
             throw new System.ArgumentNullException("fragment");
          if (file == null)
             throw new System.ArgumentNullException("file");
+         if (folder == null)
+            throw new System.ArgumentNullException("folder");
 
          owner = fragment;
          this.file = file;
+         this.folder = folder;
       }
 
       private readonly File file;
+      private readonly string folder;
       private readonly Camera2BasicFragment owner;
 
       //public File File { get; private set; }
@@ -34,7 +38,7 @@ namespace Camera2Basic.Listeners
       /// <param name="reader"></param>
       public void OnImageAvailable(ImageReader reader)
       {
-         owner.mBackgroundHandler.Post(new ImageSaver(reader.AcquireNextImage(), file));
+         owner.mBackgroundHandler.Post(new ImageSaver(reader.AcquireNextImage(), file, folder));
       }
 
       // Saves a JPEG {@link Image} into the specified {@link File}.
@@ -43,26 +47,36 @@ namespace Camera2Basic.Listeners
          // The JPEG image
          private Image mImage;
 
+         // The folder we save the image into.
+         private string mFolder;
+
          // The file we save the image into.
          private File mFile;
 
-         public ImageSaver(Image image, File file)
+         public ImageSaver(Image image, File file, string folder)
          {
             if (image == null)
                throw new System.ArgumentNullException("image");
             if (file == null)
                throw new System.ArgumentNullException("file");
+            if (folder == null)
+               throw new System.ArgumentNullException("folder");
 
             mImage = image;
             mFile = file;
+            mFolder = folder;
 
             Log.Debug(TAG, "********************************************************************************************************************************");
-            Log.Debug(TAG, $"mImage: {mImage}  mFile: {mFile}");
+            Log.Debug(TAG, $"mImage: {mImage}  mFolder: {mFolder}  mFile: {mFile}");
             Log.Debug(TAG, "********************************************************************************************************************************");
          }
 
          public void Run()
          {
+            // "/storage/emulated/0/Android/data/Camera2Basic.Camera2Basic/files"
+
+            mFile = new File(mFolder, GetNewFileName());
+
             ByteBuffer buffer = mImage.GetPlanes()[0].Buffer;
             byte[] bytes = new byte[buffer.Remaining()];
             buffer.Get(bytes);
@@ -88,7 +102,7 @@ namespace Camera2Basic.Listeners
       /// Filename is a Guid with a DateTime
       /// </summary>
       /// <returns>Calculated filename</returns>
-      private string GetNewFileName()
+      private static string GetNewFileName()
       {
          string fileName = Guid.NewGuid() + "_" + DateTime.Now.ToString("yyyyMMddhhmmss");
 

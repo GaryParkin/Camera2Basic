@@ -85,6 +85,9 @@ namespace Camera2Basic
       // An {@link ImageReader} that handles still image capture.
       private ImageReader mImageReader;
 
+      // This is the output folder for our photos
+      public string mFolder;
+
       // This is the output file for our picture.
       public File mFile;
 
@@ -224,11 +227,14 @@ namespace Camera2Basic
       {
          base.OnActivityCreated(savedInstanceState);
 
+         // Set the local folder path
+         mFolder = Activity.GetExternalFilesDir(null).ToString();
+
          // Set the local file folder and file name
          mFile = new File(Activity.GetExternalFilesDir(null), "pic.jpg");
          //mFile = new File(Activity.GetExternalFilesDir(null), GetNewFileName());
          mCaptureCallback = new CameraCaptureListener(this);
-         mOnImageAvailableListener = new ImageAvailableListener(this, mFile);
+         mOnImageAvailableListener = new ImageAvailableListener(this, mFile, mFolder);
       }
 
 
