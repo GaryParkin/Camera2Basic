@@ -98,6 +98,7 @@
     <Compile Include="CompareSizesByArea.cs" />
     <Compile Include="ConfirmationDialog.cs" />
     <Compile Include="ErrorDialog.cs" />
+    <Compile Include="FileManager.cs" />
     <Compile Include="Listeners\Camera2BasicSurfaceTextureListener.cs" />
     <Compile Include="Listeners\CameraCaptureListener.cs" />
     <Compile Include="Listeners\CameraCaptureSessionCallback.cs" />

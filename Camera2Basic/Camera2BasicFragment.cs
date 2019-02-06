@@ -22,6 +22,7 @@ using Java.Util.Concurrent;
 using Boolean = Java.Lang.Boolean;
 using Math = Java.Lang.Math;
 using Orientation = Android.Content.Res.Orientation;
+//using System.IO;
 
 namespace Camera2Basic
 {
@@ -90,6 +91,8 @@ namespace Camera2Basic
 
       // This is the output file for our picture.
       public File mFile;
+
+      private FileManager fileManager;
 
       // This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
       // still image is ready to be saved.
@@ -236,6 +239,9 @@ namespace Camera2Basic
 
          // Set the local folder path
          mFolder = Activity.GetExternalFilesDir(null).ToString();
+
+         // Assign the folder to the file manager
+         fileManager = new FileManager(mFolder);
 
          // Set the local file folder and file name
          mFile = new File(Activity.GetExternalFilesDir(null), "pic.jpg");
@@ -719,8 +725,10 @@ namespace Camera2Basic
                     mBackgroundHandler);
             // After this, the camera will go back to the normal state of preview.
             mState = STATE_PREVIEW;
-            mCaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback,
-                    mBackgroundHandler);
+            mCaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
+
+            // Check for images
+            System.IO.FileInfo[] fi = fileManager.GetImageFiles();
          }
          catch (CameraAccessException e)
          {
