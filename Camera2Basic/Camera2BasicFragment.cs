@@ -113,7 +113,11 @@ namespace Camera2Basic
       // A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
       public CameraCaptureListener mCaptureCallback;
 
-      // Shows a {@link Toast} on the UI thread.
+
+      /// <summary>
+      /// Shows a {@link Toast} on the UI thread. 
+      /// </summary>
+      /// <param name="text"></param>
       public void ShowToast(string text)
       {
          if (Activity != null)
@@ -211,7 +215,7 @@ namespace Camera2Basic
       {
          mTextureView = (AutoFitTextureView)view.FindViewById(Resource.Id.texture);
 
-         // Set up 2 listeners (code is below)
+         // Set up 2 listeners (code is below) - OnClick(View v)
          view.FindViewById(Resource.Id.picture).SetOnClickListener(this);
          view.FindViewById(Resource.Id.info).SetOnClickListener(this);
       }
@@ -219,11 +223,20 @@ namespace Camera2Basic
       public override void OnActivityCreated(Bundle savedInstanceState)
       {
          base.OnActivityCreated(savedInstanceState);
+
+         // Set the local file folder and file name
          mFile = new File(Activity.GetExternalFilesDir(null), "pic.jpg");
+         //mFile = new File(Activity.GetExternalFilesDir(null), GetNewFileName());
          mCaptureCallback = new CameraCaptureListener(this);
          mOnImageAvailableListener = new ImageAvailableListener(this, mFile);
       }
 
+
+
+
+      /// <summary>
+      /// Handler for the app resumed after being paused (could be rotation)
+      /// </summary>
       public override void OnResume()
       {
          base.OnResume();
@@ -243,6 +256,9 @@ namespace Camera2Basic
          }
       }
 
+      /// <summary>
+      /// Handler for the app being paused (could be rotation)
+      /// </summary>
       public override void OnPause()
       {
          CloseCamera();
@@ -250,6 +266,9 @@ namespace Camera2Basic
          base.OnPause();
       }
 
+      /// <summary>
+      /// Request the user to grant permissions
+      /// </summary>
       private void RequestCameraPermission()
       {
          if (FragmentCompat.ShouldShowRequestPermissionRationale(this, Manifest.Permission.Camera))
@@ -263,6 +282,12 @@ namespace Camera2Basic
          }
       }
 
+      /// <summary>
+      /// Results of the request after the user has set the permissions
+      /// </summary>
+      /// <param name="requestCode"></param>
+      /// <param name="permissions"></param>
+      /// <param name="grantResults"></param>
       public void OnRequestPermissionsResult(int requestCode, string[] permissions, int[] grantResults)
       {
          if (requestCode != REQUEST_CAMERA_PERMISSION)
@@ -276,7 +301,11 @@ namespace Camera2Basic
       }
 
 
-      // **** Sets up member variables related to camera ****
+      /// <summary>
+      /// Sets up member variables related to camera
+      /// </summary>
+      /// <param name="width"></param>
+      /// <param name="height"></param>
       private void SetUpCameraOutputs(int width, int height)
       {
          var activity = Activity;
@@ -305,7 +334,7 @@ namespace Camera2Basic
                }
 
                // For still image captures, we use the largest available size.
-               Size largest = (Size)Collections.Max(Arrays.AsList(map.GetOutputSizes((int)ImageFormatType.Jpeg)), 
+               Size largest = (Size)Collections.Max(Arrays.AsList(map.GetOutputSizes((int)ImageFormatType.Jpeg)),
                   new CompareSizesByArea());
 
                mImageReader = ImageReader.NewInstance(largest.Width, largest.Height, ImageFormatType.Jpeg, /*maxImages*/2);
@@ -568,13 +597,17 @@ namespace Camera2Basic
          mTextureView.SetTransform(matrix);
       }
 
-      // Initiate a still image capture, called from the OnClick listener below
+      /// <summary>
+      /// Initiate a still image capture, called from the OnClick listener below
+      /// </summary>
       private void TakePicture()
       {
          LockFocus();
       }
 
-      // Lock the focus as the first step for a still image capture.
+      /// <summary>
+      /// Locks the focus as the first step for a still image capture
+      /// </summary>
       private void LockFocus()
       {
          try
@@ -679,7 +712,10 @@ namespace Camera2Basic
          }
       }
 
-      // This is called by the OnClick of the buttons
+      /// <summary>
+      /// This is called by the OnClick of the buttons
+      /// </summary>
+      /// <param name="v">View</param>
       public void OnClick(View v)
       {
          if (v.Id == Resource.Id.picture)
