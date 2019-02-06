@@ -223,6 +223,13 @@ namespace Camera2Basic
          view.FindViewById(Resource.Id.info).SetOnClickListener(this);
       }
 
+
+      // **************************************************************************************************************************
+
+      /// <summary>
+      /// This is where the activity is created
+      /// </summary>
+      /// <param name="savedInstanceState"></param>
       public override void OnActivityCreated(Bundle savedInstanceState)
       {
          base.OnActivityCreated(savedInstanceState);
@@ -232,12 +239,10 @@ namespace Camera2Basic
 
          // Set the local file folder and file name
          mFile = new File(Activity.GetExternalFilesDir(null), "pic.jpg");
-         //mFile = new File(Activity.GetExternalFilesDir(null), GetNewFileName());
          mCaptureCallback = new CameraCaptureListener(this);
          mOnImageAvailableListener = new ImageAvailableListener(this, mFile, mFolder);
       }
-
-
+      // **************************************************************************************************************************
 
 
       /// <summary>
@@ -506,7 +511,10 @@ namespace Camera2Basic
          }
       }
 
-      // Starts a background thread and its {@link Handler}.
+      /// <summary>
+      /// Starts a background thread and its {@link Handler}.
+      /// Used in LockFocus()
+      /// </summary>
       private void StartBackgroundThread()
       {
          mBackgroundThread = new HandlerThread("CameraBackground");
@@ -514,7 +522,9 @@ namespace Camera2Basic
          mBackgroundHandler = new Handler(mBackgroundThread.Looper);
       }
 
-      // Stops the background thread and its {@link Handler}.
+      /// <summary>
+      /// Stops the background thread and its {@link Handler}.
+      /// </summary>
       private void StopBackgroundThread()
       {
          mBackgroundThread.QuitSafely();
