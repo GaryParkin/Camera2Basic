@@ -22,7 +22,7 @@ using Java.Util.Concurrent;
 using Boolean = Java.Lang.Boolean;
 using Math = Java.Lang.Math;
 using Orientation = Android.Content.Res.Orientation;
-//using System.IO;
+
 
 namespace Camera2Basic
 {
@@ -119,6 +119,7 @@ namespace Camera2Basic
       // A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
       public CameraCaptureListener mCaptureCallback;
 
+      private ListView lvPictures;
 
       /// <summary>
       /// Shows a {@link Toast} on the UI thread. 
@@ -224,6 +225,7 @@ namespace Camera2Basic
          // Set up 2 listeners (code is below) - OnClick(View v)
          view.FindViewById(Resource.Id.picture).SetOnClickListener(this);
          view.FindViewById(Resource.Id.info).SetOnClickListener(this);
+         lvPictures = view.FindViewById<ListView>(Resource.Id.lvPictures);
       }
 
 
@@ -728,7 +730,9 @@ namespace Camera2Basic
             mCaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 
             // Check for images
-            System.IO.FileInfo[] fi = fileManager.GetImageFiles();
+            System.IO.FileInfo[] files = fileManager.GetImageFiles();
+
+            Activity.RunOnUiThread(() => AddPicturesToList());
          }
          catch (CameraAccessException e)
          {
@@ -768,6 +772,101 @@ namespace Camera2Basic
             requestBuilder.Set(CaptureRequest.ControlAeMode, (int)ControlAEMode.OnAutoFlash);
          }
       }
+
+
+      /********** PICTURES DISPLAY SECTION **********/
+
+      public void AddPicturesToList()
+      {
+         string[] jpgFiles = System.IO.Directory.GetFiles(mFolder, "*.jpg");
+
+         List<string> files = new List<string>();
+         foreach (string jpgFile in jpgFiles)
+         {
+            files.Add(jpgFile);
+         }
+
+
+         //li.Add("1");
+         //li.Add("2");
+         //li.Add("3");
+         //li.Add("4");
+
+         //foreach (string jpgFile in jpgFiles)
+         //{
+         //   li.Add(jpgFile);
+         //   //   //Image imgToAdd = Image.FromFile(jpgFile);
+         //   //   //imgToAdd.Tag = jpgFile;
+         //   //   //imageDictionary.Add(Path.GetFileName(jpgFile), imgToAdd);
+         //}
+
+         //System.IO.FileInfo[] files = fileManager.GetImageFiles();
+
+         // Bitmap bitmap = BitmapFactory.DecodeFile(files[0].FullName);
+
+         // List<File> fl = new List<File>();
+
+         try
+         {
+            PhotoListAdapter photoAdapter = new PhotoListAdapter(Activity, files);
+            // ArrayAdapter<string> adapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.SimpleListItem1, li);
+            // ArrayAdapter<string> adapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.ActivityListItem, li);
+            lvPictures.Adapter = photoAdapter;
+
+         }
+         catch (System.Exception e)
+         {
+
+            throw;
+         }
+
+
+         //foreach (string jpgFile in jpgFiles)
+         //{
+         //   //Image imgToAdd = Image.FromFile(jpgFile);
+         //   //imgToAdd.Tag = jpgFile;
+         //   //imageDictionary.Add(Path.GetFileName(jpgFile), imgToAdd);
+         //}
+
+
+
+         //System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(@"c:\myPicutures"); //change and get your folder
+         //foreach (System.IO.FileInfo file in dir.GetFiles())
+         //{
+         //   try
+         //   {
+         //      this.imageList1.Images.Add(Image.FromFile(file.FullName));
+         //   }
+         //   catch
+         //   {
+         //      Console.WriteLine("This is not an image file");
+         //   }
+         //}
+         //this.listView1.View = View.LargeIcon;
+         //this.imageList1.ImageSize = new Size(32, 32);
+         //this.listView1.LargeImageList = this.imageList1;
+         ////or
+         ////this.listView1.View = View.SmallIcon;
+         ////this.listView1.SmallImageList = this.imageList1;
+
+         //for (int j = 0; j < this.imageList1.Images.Count; j++)
+         //{
+         //   ListViewItem item = new ListViewItem();
+         //   item.ImageIndex = j;
+         //   this.listView1.Items.Add(item);
+         //}
+
+
+      }
+
+
+
+
+
+
+
    }
+
+
 }
 

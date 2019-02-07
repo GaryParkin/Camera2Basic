@@ -23,6 +23,7 @@ namespace Camera2Basic.Listeners
          owner.ShowToast("Saved: " + owner.mFile);
          Log.Debug(TAG,$"owner.mFolder: {owner.mFolder} owner.mFile: {owner.mFile.ToString()}");
          owner.UnlockFocus();
+         // don't work here: owner.AddPicturesToList();
       }
    }
 }
