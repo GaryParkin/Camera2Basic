@@ -120,6 +120,7 @@ namespace Camera2Basic
       public CameraCaptureListener mCaptureCallback;
 
       private ListView lvPictures;
+      private LinearLayout linear;
 
       /// <summary>
       /// Shows a {@link Toast} on the UI thread. 
@@ -225,7 +226,10 @@ namespace Camera2Basic
          // Set up 2 listeners (code is below) - OnClick(View v)
          view.FindViewById(Resource.Id.picture).SetOnClickListener(this);
          view.FindViewById(Resource.Id.info).SetOnClickListener(this);
-         lvPictures = view.FindViewById<ListView>(Resource.Id.lvPictures);
+         ////        lvPictures = view.FindViewById<ListView>(Resource.Id.lvPictures);
+
+         linear = view.FindViewById<LinearLayout>(Resource.Id.linear);
+
       }
 
 
@@ -249,6 +253,10 @@ namespace Camera2Basic
          mFile = new File(Activity.GetExternalFilesDir(null), "pic.jpg");
          mCaptureCallback = new CameraCaptureListener(this);
          mOnImageAvailableListener = new ImageAvailableListener(this, mFile, mFolder);
+
+         // Add the photos to the list
+         Activity.RunOnUiThread(() => AddPicturesToList());
+
       }
       // **************************************************************************************************************************
 
@@ -729,9 +737,7 @@ namespace Camera2Basic
             mState = STATE_PREVIEW;
             mCaptureSession.SetRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler);
 
-            // Check for images
-            System.IO.FileInfo[] files = fileManager.GetImageFiles();
-
+            // Add the photos to the list
             Activity.RunOnUiThread(() => AddPicturesToList());
          }
          catch (CameraAccessException e)
@@ -776,47 +782,52 @@ namespace Camera2Basic
 
       /********** PICTURES DISPLAY SECTION **********/
 
+      /// <summary>
+      /// Reads the internal folder and adds all of the pictures to the screen
+      /// </summary>
       public void AddPicturesToList()
       {
          string[] jpgFiles = System.IO.Directory.GetFiles(mFolder, "*.jpg");
 
-         List<string> files = new List<string>();
-         foreach (string jpgFile in jpgFiles)
-         {
-            files.Add(jpgFile);
-         }
-
-
-         //li.Add("1");
-         //li.Add("2");
-         //li.Add("3");
-         //li.Add("4");
-
-         //foreach (string jpgFile in jpgFiles)
-         //{
-         //   li.Add(jpgFile);
-         //   //   //Image imgToAdd = Image.FromFile(jpgFile);
-         //   //   //imgToAdd.Tag = jpgFile;
-         //   //   //imageDictionary.Add(Path.GetFileName(jpgFile), imgToAdd);
-         //}
-
-         //System.IO.FileInfo[] files = fileManager.GetImageFiles();
-
-         // Bitmap bitmap = BitmapFactory.DecodeFile(files[0].FullName);
-
-         // List<File> fl = new List<File>();
-
          try
          {
-            PhotoListAdapter photoAdapter = new PhotoListAdapter(Activity, files);
-            // ArrayAdapter<string> adapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.SimpleListItem1, li);
-            // ArrayAdapter<string> adapter = new ArrayAdapter<string>(this.Context, Android.Resource.Layout.ActivityListItem, li);
-            lvPictures.Adapter = photoAdapter;
+
+            int i = 0;
+            foreach (string jpgFile in jpgFiles)
+            {
+               ExifInterface exif = new ExifInterface(jpgFile);
+               var iOrientation = exif.GetAttributeInt(ExifInterface.TagOrientation, 1);
+               int rotation = 0;
+               switch (iOrientation)
+               {
+                  case 6:
+                     rotation = 90;
+                     break;
+                  case 3:
+                     rotation = 180;
+                     break;
+                  default:
+                     // No change
+                     break;
+               }
+
+               ImageView imageView = new ImageView(this.Context);
+               imageView.Id = i;
+               imageView.SetPadding(0, 2, 0, 2);
+               Bitmap bitmap = BitmapFactory.DecodeFile(jpgFile);
+               imageView.SetImageBitmap(bitmap);
+               imageView.SetScaleType(ImageView.ScaleType.FitCenter);
+               imageView.Rotation = rotation;
+               linear.AddView(imageView);
+               // Needs to be after the AddView
+               imageView.LayoutParameters.Height = 500;
+               imageView.LayoutParameters.Width = 500;
+               i++;
+            }
 
          }
          catch (System.Exception e)
          {
-
             throw;
          }
 

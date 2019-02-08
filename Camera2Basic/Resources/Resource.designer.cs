@@ -2122,14 +2122,14 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f06000b
 			public const int line3 = 2131099659;
 			
+			// aapt resource value: 0x7f060068
+			public const int linear = 2131099752;
+			
 			// aapt resource value: 0x7f060010
 			public const int listMode = 2131099664;
 			
 			// aapt resource value: 0x7f06003d
 			public const int list_item = 2131099709;
-			
-			// aapt resource value: 0x7f060068
-			public const int lvPictures = 2131099752;
 			
 			// aapt resource value: 0x7f060073
 			public const int media_actions = 2131099763;
