@@ -22,7 +22,7 @@ using Java.Util.Concurrent;
 using Boolean = Java.Lang.Boolean;
 using Math = Java.Lang.Math;
 using Orientation = Android.Content.Res.Orientation;
-
+using System.Linq;
 
 namespace Camera2Basic
 {
@@ -712,7 +712,11 @@ namespace Camera2Basic
          }
       }
 
-      // Retrieves the JPEG orientation from the specified screen rotation.
+      /// <summary>
+      /// Retrieves the JPEG orientation from the specified screen rotation 
+      /// </summary>
+      /// <param name="rotation"></param>
+      /// <returns></returns>
       private int GetOrientation(int rotation)
       {
          // Sensor orientation is 90 for most devices, or 270 for some devices (eg. Nexus 5X)
@@ -763,10 +767,13 @@ namespace Camera2Basic
             Activity activity = Activity;
             if (activity != null)
             {
-               new AlertDialog.Builder(activity)
-                   .SetMessage("This sample demonstrates the basic use of the Camera2 API. ...")
-                   .SetPositiveButton(Android.Resource.String.Ok, nullHandler)
-                   .Show();
+               UploadAllPhotos();
+
+
+               //new AlertDialog.Builder(activity)
+               //    .SetMessage("This sample demonstrates the basic use of the Camera2 API. ...")
+               //    .SetPositiveButton(Android.Resource.String.Ok, nullHandler)
+               //    .Show();
             }
          }
       }
@@ -789,13 +796,21 @@ namespace Camera2Basic
       {
          string[] jpgFiles = System.IO.Directory.GetFiles(mFolder, "*.jpg");
 
+         System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(mFolder);
+         System.IO.FileInfo[] files = dir.GetFiles().OrderByDescending(p => p.CreationTime).ToArray();
+
          try
          {
 
-            int i = 0;
-            foreach (string jpgFile in jpgFiles)
+            // Remove all the photos from the list
+            linear.RemoveAllViews();
+
+            for (int index = 0; index < files.Length; index++)
             {
-               ExifInterface exif = new ExifInterface(jpgFile);
+               Log.Info(TAG, files[index].FullName);
+               Log.Info(TAG, files[index].CreationTime.ToString());
+
+               ExifInterface exif = new ExifInterface(files[index].FullName);
                var iOrientation = exif.GetAttributeInt(ExifInterface.TagOrientation, 1);
                int rotation = 0;
                switch (iOrientation)
@@ -812,9 +827,9 @@ namespace Camera2Basic
                }
 
                ImageView imageView = new ImageView(this.Context);
-               imageView.Id = i;
+               imageView.Id = index;
                imageView.SetPadding(0, 2, 0, 2);
-               Bitmap bitmap = BitmapFactory.DecodeFile(jpgFile);
+               Bitmap bitmap = BitmapFactory.DecodeFile(files[index].FullName);
                imageView.SetImageBitmap(bitmap);
                imageView.SetScaleType(ImageView.ScaleType.FitCenter);
                imageView.Rotation = rotation;
@@ -822,7 +837,6 @@ namespace Camera2Basic
                // Needs to be after the AddView
                imageView.LayoutParameters.Height = 500;
                imageView.LayoutParameters.Width = 500;
-               i++;
             }
 
          }
@@ -831,53 +845,35 @@ namespace Camera2Basic
             throw;
          }
 
+      }
 
-         //foreach (string jpgFile in jpgFiles)
-         //{
-         //   //Image imgToAdd = Image.FromFile(jpgFile);
-         //   //imgToAdd.Tag = jpgFile;
-         //   //imageDictionary.Add(Path.GetFileName(jpgFile), imgToAdd);
-         //}
+      public void UploadAllPhotos()
+      {
+         File fileList = new File(mFolder);
 
+         //check if dir is not null
+         if (fileList != null)
+         {
+            // so we can list all files
+            File[] filenames = fileList.ListFiles();
 
+            // loop through each file and delete
+            foreach (File file in filenames)
+            {
+               if (!file.IsDirectory)
+               {
+                  file.Delete();
+                  Log.Info(TAG, file.Path);
+               }
+            }
 
-         //System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(@"c:\myPicutures"); //change and get your folder
-         //foreach (System.IO.FileInfo file in dir.GetFiles())
-         //{
-         //   try
-         //   {
-         //      this.imageList1.Images.Add(Image.FromFile(file.FullName));
-         //   }
-         //   catch
-         //   {
-         //      Console.WriteLine("This is not an image file");
-         //   }
-         //}
-         //this.listView1.View = View.LargeIcon;
-         //this.imageList1.ImageSize = new Size(32, 32);
-         //this.listView1.LargeImageList = this.imageList1;
-         ////or
-         ////this.listView1.View = View.SmallIcon;
-         ////this.listView1.SmallImageList = this.imageList1;
+            // Remove all the photos from the list
+            linear.RemoveAllViews();
 
-         //for (int j = 0; j < this.imageList1.Images.Count; j++)
-         //{
-         //   ListViewItem item = new ListViewItem();
-         //   item.ImageIndex = j;
-         //   this.listView1.Items.Add(item);
-         //}
-
-
+         }
       }
 
 
-
-
-
-
-
    }
-
-
 }
 

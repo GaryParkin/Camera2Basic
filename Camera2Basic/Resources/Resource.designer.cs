@@ -1945,8 +1945,8 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f060028
 			public const int META = 2131099688;
 			
-			// aapt resource value: 0x7f06006c
-			public const int PhotoImageView = 2131099756;
+			// aapt resource value: 0x7f06006d
+			public const int PhotoImageView = 2131099757;
 			
 			// aapt resource value: 0x7f060029
 			public const int SHIFT = 2131099689;
@@ -1954,8 +1954,8 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f06002a
 			public const int SYM = 2131099690;
 			
-			// aapt resource value: 0x7f060070
-			public const int action0 = 2131099760;
+			// aapt resource value: 0x7f060071
+			public const int action0 = 2131099761;
 			
 			// aapt resource value: 0x7f060058
 			public const int action_bar = 2131099736;
@@ -1978,17 +1978,17 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f060036
 			public const int action_bar_title = 2131099702;
 			
-			// aapt resource value: 0x7f06006d
-			public const int action_container = 2131099757;
+			// aapt resource value: 0x7f06006e
+			public const int action_container = 2131099758;
 			
 			// aapt resource value: 0x7f060059
 			public const int action_context_bar = 2131099737;
 			
-			// aapt resource value: 0x7f060074
-			public const int action_divider = 2131099764;
+			// aapt resource value: 0x7f060075
+			public const int action_divider = 2131099765;
 			
-			// aapt resource value: 0x7f06006e
-			public const int action_image = 2131099758;
+			// aapt resource value: 0x7f06006f
+			public const int action_image = 2131099759;
 			
 			// aapt resource value: 0x7f060003
 			public const int action_menu_divider = 2131099651;
@@ -2005,11 +2005,11 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f060038
 			public const int action_mode_close_button = 2131099704;
 			
-			// aapt resource value: 0x7f06006f
-			public const int action_text = 2131099759;
+			// aapt resource value: 0x7f060070
+			public const int action_text = 2131099760;
 			
-			// aapt resource value: 0x7f06007c
-			public const int actions = 2131099772;
+			// aapt resource value: 0x7f06007d
+			public const int actions = 2131099773;
 			
 			// aapt resource value: 0x7f060039
 			public const int activity_chooser_view_content = 2131099705;
@@ -2038,14 +2038,14 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f06003f
 			public const int buttonPanel = 2131099711;
 			
-			// aapt resource value: 0x7f060071
-			public const int cancel_action = 2131099761;
+			// aapt resource value: 0x7f060072
+			public const int cancel_action = 2131099762;
 			
 			// aapt resource value: 0x7f06004f
 			public const int checkbox = 2131099727;
 			
-			// aapt resource value: 0x7f060079
-			public const int chronometer = 2131099769;
+			// aapt resource value: 0x7f06007a
+			public const int chronometer = 2131099770;
 			
 			// aapt resource value: 0x7f06002c
 			public const int collapseActionView = 2131099692;
@@ -2077,8 +2077,8 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f060023
 			public const int end = 2131099683;
 			
-			// aapt resource value: 0x7f06007e
-			public const int end_padder = 2131099774;
+			// aapt resource value: 0x7f06007f
+			public const int end_padder = 2131099775;
 			
 			// aapt resource value: 0x7f06003a
 			public const int expand_activities_button = 2131099706;
@@ -2098,8 +2098,8 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f06003e
 			public const int icon = 2131099710;
 			
-			// aapt resource value: 0x7f06007d
-			public const int icon_group = 2131099773;
+			// aapt resource value: 0x7f06007e
+			public const int icon_group = 2131099774;
 			
 			// aapt resource value: 0x7f06002d
 			public const int ifRoom = 2131099693;
@@ -2131,11 +2131,11 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f06003d
 			public const int list_item = 2131099709;
 			
-			// aapt resource value: 0x7f060073
-			public const int media_actions = 2131099763;
+			// aapt resource value: 0x7f060074
+			public const int media_actions = 2131099764;
 			
-			// aapt resource value: 0x7f06007f
-			public const int message = 2131099775;
+			// aapt resource value: 0x7f060080
+			public const int message = 2131099776;
 			
 			// aapt resource value: 0x7f060024
 			public const int middle = 2131099684;
@@ -2152,14 +2152,14 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f060011
 			public const int normal = 2131099665;
 			
-			// aapt resource value: 0x7f06007b
-			public const int notification_background = 2131099771;
+			// aapt resource value: 0x7f06007c
+			public const int notification_background = 2131099772;
+			
+			// aapt resource value: 0x7f060077
+			public const int notification_main_column = 2131099767;
 			
 			// aapt resource value: 0x7f060076
-			public const int notification_main_column = 2131099766;
-			
-			// aapt resource value: 0x7f060075
-			public const int notification_main_column_container = 2131099765;
+			public const int notification_main_column_container = 2131099766;
 			
 			// aapt resource value: 0x7f060041
 			public const int parentPanel = 2131099713;
@@ -2176,11 +2176,11 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f060051
 			public const int radio = 2131099729;
 			
-			// aapt resource value: 0x7f06007a
-			public const int right_icon = 2131099770;
+			// aapt resource value: 0x7f06007b
+			public const int right_icon = 2131099771;
 			
-			// aapt resource value: 0x7f060077
-			public const int right_side = 2131099767;
+			// aapt resource value: 0x7f060078
+			public const int right_side = 2131099768;
 			
 			// aapt resource value: 0x7f06001c
 			public const int screen = 2131099676;
@@ -2193,6 +2193,9 @@ namespace Camera2Basic
 			
 			// aapt resource value: 0x7f060044
 			public const int scrollView = 2131099716;
+			
+			// aapt resource value: 0x7f06006c
+			public const int scrollview = 2131099756;
 			
 			// aapt resource value: 0x7f06005c
 			public const int search_badge = 2131099740;
@@ -2254,8 +2257,8 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f06001f
 			public const int src_over = 2131099679;
 			
-			// aapt resource value: 0x7f060072
-			public const int status_bar_latest_event_content = 2131099762;
+			// aapt resource value: 0x7f060073
+			public const int status_bar_latest_event_content = 2131099763;
 			
 			// aapt resource value: 0x7f060052
 			public const int submenuarrow = 2131099730;
@@ -2284,8 +2287,8 @@ namespace Camera2Basic
 			// aapt resource value: 0x7f060069
 			public const int texture = 2131099753;
 			
-			// aapt resource value: 0x7f060078
-			public const int time = 2131099768;
+			// aapt resource value: 0x7f060079
+			public const int time = 2131099769;
 			
 			// aapt resource value: 0x7f06000f
 			public const int title = 2131099663;
